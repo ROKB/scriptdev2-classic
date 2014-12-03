@@ -35,6 +35,7 @@ enum
     SPELL_SHADE_OF_JINDO            = 24308,                // Spell was removed  from DBC around TBC; will summon npcs manually!
 
     SPELL_HEALING_WARD_HEAL         = 24311,
+    SPELL_SHADE_OF_JINDO_PASSIVE    = 24307,
 
     // npcs
     NPC_SHADE_OF_JINDO              = 14986,
@@ -49,7 +50,7 @@ static const float aPitTeleportLocs[4] =
     -11583.7783f, -1249.4278f, 77.5471f, 4.745f
 };
 
-struct MANGOS_DLL_DECL boss_jindoAI : public ScriptedAI
+struct boss_jindoAI : public ScriptedAI
 {
     boss_jindoAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
@@ -133,7 +134,7 @@ struct MANGOS_DLL_DECL boss_jindoAI : public ScriptedAI
                 float fX, fY, fZ;
                 m_creature->GetRandomPoint(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 5.0f, fX, fY, fZ);
                 if (Creature* pSummoned = m_creature->SummonCreature(NPC_SHADE_OF_JINDO, fX, fY, fZ, 0, TEMPSUMMON_TIMED_OOC_DESPAWN, 15000))
-                    pSummoned->AI()->AttackStart(pTarget);
+                    pSummoned->CastSpell(pSummoned, SPELL_SHADE_OF_JINDO_PASSIVE, true);
 
                 m_uiDelusionsTimer = urand(4000, 12000);
             }
@@ -168,7 +169,7 @@ struct MANGOS_DLL_DECL boss_jindoAI : public ScriptedAI
 };
 
 // HACK script! Should not need to have totems in sd2
-struct MANGOS_DLL_DECL mob_healing_wardAI : public ScriptedAI
+struct mob_healing_wardAI : public ScriptedAI
 {
     mob_healing_wardAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 

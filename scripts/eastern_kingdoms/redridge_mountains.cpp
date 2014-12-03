@@ -45,7 +45,7 @@ enum
     SAY_CORPORAL_KEESHAN_5  = -1000565,
 };
 
-struct MANGOS_DLL_DECL npc_corporal_keeshan_escortAI : public npc_escortAI
+struct npc_corporal_keeshan_escortAI : public npc_escortAI
 {
     npc_corporal_keeshan_escortAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
 
@@ -63,6 +63,7 @@ struct MANGOS_DLL_DECL npc_corporal_keeshan_escortAI : public npc_escortAI
         if (eventType == AI_EVENT_START_ESCORT && pInvoker->GetTypeId() == TYPEID_PLAYER)
         {
             DoScriptText(SAY_CORPORAL_KEESHAN_1, m_creature);
+            m_creature->SetFactionTemporary(FACTION_ESCORT_A_NEUTRAL_ACTIVE, TEMPFACTION_RESTORE_RESPAWN);
             Start(false, (Player*)pInvoker, GetQuestTemplateStore(uiMiscValue));
         }
     }
